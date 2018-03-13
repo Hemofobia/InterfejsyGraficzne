@@ -1,0 +1,79 @@
+doctype html
+html(lang="pl")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale-1")
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    title Strona główna
+  body
+    nav
+      if login == undefined
+        .inner-topnav
+          a.button(href="/")
+            img(src="http://cdn3-www.dogtime.com/assets/uploads/gallery/pug-dog-breed-pictures/3-sidesitting.jpg" alt="LOGO" style="width: 120px; height: 88px;")
+          .topnav-buttons
+            a.button(href="/zarejestruj") Zarejestruj się
+            a.button(href="/zaloguj") Zaloguj się
+            a.button(href="/about") O aplikacji
+            a.button(href="/kontakt") Kontakt
+      else
+        .inner-topnav
+          a.button(href="/?login=" + login)
+            img(src="http://cdn3-www.dogtime.com/assets/uploads/gallery/pug-dog-breed-pictures/3-sidesitting.jpg" alt="LOGO" style="width: 120px; height: 88px;")
+          .topnav-buttons
+            a.button(href="/about?login=" + login) O aplikacji
+            a.button(href="/kontakt?login=" + login) Kontakt
+            a.button(href="/") Wyloguj
+    main
+      if login == undefined
+        .middle-text
+          .content-text(style="width: 100%;")
+            if valid==undefined
+              h1 Bądź na bieżąco!
+            else
+              h1 Wszystko poszło dobrze :)
+          form#main(action="/")
+            input(type="text" name='eventToSearch' required="required")
+            input.button(type="submit" value="Search")
+          br
+        .mainThings
+          .dropdown
+            button.dropbtn Co?
+            .dropdown-content
+              a(href="/searchCategory?cat=concert") Koncert
+              a(href="/searchCategory?cat=theatre") Teatr
+              a(href="/searchCategory?cat=cinema") Kino
+          form#main2(action="/searchDate")
+            input(type="date" name="dateEvent")
+            input.button(type="submit" value="Submit")
+      else
+        .middle-text
+          .content-text(style="width: 100%;")
+            if valid==undefined
+              h1 Bądź na bieżąco!
+            else
+              h1 Wszystko poszło dobrze :)
+          form#main(action="/?login="+login)
+            input(type="text" name='eventToSearch' required="required")
+            input.button(type="submit" value="Search")
+          br
+        .mainThings
+          .dropdown
+            button.dropbtn Co?
+            .dropdown-content
+              a(href="/searchCategory?cat=concert&login="+login) Koncert
+              a(href="/searchCategory?cat=theatre&login="+login) Teatr
+              a(href="/searchCategory?cat=cinema&login="+login) Kino
+          form#main2(action="/searchDate&login="+login)
+            input(type="date" name="dateEvent")
+            input.button(type="submit" value="Submit")
+    main2
+      for event in values
+        .imagebutton
+          for val in event
+            if login==undefined
+              a.button.imgbtn(href="/event?eventName=" + val)=val
+            else
+              a.button.imgbtn(href="/event?login=" + login + "&eventName=" + val)=val
+    footer
+      p &copy 2018 ChonotuTeam. All rights reserved

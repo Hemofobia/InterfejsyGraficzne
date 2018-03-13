@@ -1,0 +1,39 @@
+doctype html
+html(lang='pl')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale-1')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    title Moje konto
+  body
+    script.
+      function redirectToDelete() {
+      var login = location.search.split('login=')[1];
+      var url= '/delete?userToDelete=' + login;
+      window.location.replace(url);
+      }
+      function redirectToTickets() {
+      var login = location.search.split('login=')[1];
+      var url= '/mytickets?login=' + login;
+      window.location.replace(url);
+      }
+    nav
+      .inner-topnav
+        a.button(href='/?login='+login)
+          img(src="http://cdn3-www.dogtime.com/assets/uploads/gallery/pug-dog-breed-pictures/3-sidesitting.jpg" alt="LOGO" style="width: 120px; height: 88px;")
+        .topnav-buttons
+          a.button(href='/about?login='+login) O aplikacji
+          a.button(href='/kontakt?login='+login) Kontakt
+          a.button(href="/") Wyloguj
+    main
+      .user-info
+        h3 Cześć, !{JSON.stringify(login)}
+        ul
+          li Data urodzenia: !{JSON.stringify(date_of_birth)}
+          li Mail: !{JSON.stringify(email)}
+      .content-buttons
+        button.button(onclick='redirectToDelete()') Usuń konto
+        button.button(onclick='redirectToTickets()') Moje bilety
+    footer
+      p &copy 2018 ChonotuTeam. All rights reserved
+
